@@ -1,0 +1,31 @@
+# Global Gitignore for FlowHub
+
+# Node.js / Vite (Frontend)
+node_modules/
+dist/
+dist-ssr/
+*.local
+.env
+.env.development
+.env.local
+
+# Java / Spring Boot (Backend)
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.log
+data/
+flowhubdb*
+
+# IDE and OS files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

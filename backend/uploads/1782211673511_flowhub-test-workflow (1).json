@@ -1,0 +1,70 @@
+{
+  "name": "flowhub-test-workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "my-workflow-hub",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1350a348-776a-428c-8c99-654dcfba5363",
+      "name": "Webhook",
+      "webhookId": "835f4c49-02d3-48a6-aa6a-549ab7227574"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "16128083-e11c-4293-90ff-934e9df733f2",
+              "name": "message",
+              "value": "Hello from Legend Baaruu",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "62e6508e-3a48-47c4-8877-5270704acc6f",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "ec0a0c6b-e651-4fea-a00d-d5556ae45a93",
+  "meta": {
+    "instanceId": "4b5e76b0cf6d9c4a66d5b392de5589929ddc9358a6bf725af9a869b05c5651ca"
+  },
+  "nodeGroups": [],
+  "id": "OwOYwMHND9VRWVjQ",
+  "tags": []
+}

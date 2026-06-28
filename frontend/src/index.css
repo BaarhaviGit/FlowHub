@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Medium/Advanced Pro Slate background */
+    --background: hsl(220, 15%, 16%);
+    --foreground: hsl(220, 20%, 95%);
+    /* Cards slightly elevated slate */
+    --card: hsl(220, 15%, 22%);
+    --card-foreground: hsl(220, 20%, 95%);
+    --popover: hsl(220, 15%, 22%);
+    --popover-foreground: hsl(220, 20%, 95%);
+    /* Advanced Cyan Accent */
+    --primary: hsl(185, 100%, 45%);
+    --primary-foreground: hsl(0, 0%, 10%);
+    /* Secondary and muted */
+    --secondary: hsl(220, 15%, 26%);
+    --secondary-foreground: hsl(220, 20%, 95%);
+    --muted: hsl(220, 15%, 26%);
+    --muted-foreground: hsl(220, 15%, 70%);
+    --accent: hsl(185, 100%, 45%);
+    --accent-foreground: hsl(0, 0%, 10%);
+    --destructive: hsl(0, 80%, 60%);
+    --destructive-foreground: hsl(220, 20%, 95%);
+    /* Borders */
+    --border: hsl(220, 15%, 30%);
+    --input: hsl(220, 15%, 20%);
+    --ring: hsl(185, 100%, 45%);
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image: radial-gradient(circle at 50% -20%, rgba(0, 229, 255, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+}
+
+@layer components {
+  /* Premium cards */
+  .bg-card {
+    @apply transition-all duration-300 shadow-lg shadow-[rgba(0,0,0,0.2)] backdrop-blur-md bg-opacity-90;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .bg-card:hover {
+    @apply shadow-xl shadow-[rgba(0,229,255,0.15)] -translate-y-[2px];
+    border-color: rgba(0, 229, 255, 0.4);
+  }
+
+  /* Clean inputs with cyan focus */
+  input, textarea, select {
+    @apply transition-all duration-300;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  input:focus, textarea:focus, select:focus {
+    @apply ring-1 ring-[rgba(0,229,255,0.6)] border-[rgba(0,229,255,0.5)] shadow-[0_0_15px_rgba(0,229,255,0.15)];
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+
+  /* Vibrant interactive buttons */
+  button {
+    @apply transition-all duration-200 active:scale-[0.98];
+  }
+  
+  .bg-primary:hover {
+    @apply shadow-[0_0_20px_rgba(0,229,255,0.3)] opacity-95;
+  }
+}
