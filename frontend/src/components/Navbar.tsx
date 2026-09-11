@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom"
-import { Search, Braces } from "lucide-react"
+import { Search } from "lucide-react"
 import { useAuth } from "../context/AuthContext"
+import LogoMark from "./LogoMark"
 
 export default function Navbar() {
   const { isAuthenticated, username, logout } = useAuth()
@@ -14,7 +15,7 @@ export default function Navbar() {
         <div className="flex items-center gap-8">
           <Link to="/" className="flex items-center gap-2.5 group">
             <span className="relative w-8 h-8 rounded-lg bg-ink border-2 border-foreground flex items-center justify-center shadow-[2px_2px_0_0_var(--foreground)] group-hover:shadow-[2px_2px_0_0_var(--foreground)] transition-transform group-hover:-rotate-3">
-              <Braces className="w-4 h-4 text-[hsl(79,90%,55%)]" />
+              <LogoMark className="w-5 h-5 text-[hsl(79,90%,55%)]" />
             </span>
             <span className="text-lg font-extrabold tracking-tight text-foreground">
               Flow<span className="text-[hsl(79,50%,30%)]">Hub</span>
