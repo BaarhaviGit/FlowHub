@@ -36,6 +36,16 @@ export default function NodeCanvas({ theme = "paper", className = "" }: NodeCanv
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.15 }}
       >
+        <motion.circle
+          cx="150"
+          cy="90"
+          r="40"
+          fill="none"
+          stroke={ink.node}
+          strokeOpacity="0.4"
+          animate={{ r: [34, 48], opacity: [0.4, 0] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut" }}
+        />
         <circle cx="150" cy="90" r="34" fill={theme === "ink" ? "#13190F" : "#FFFFFF"} stroke={ink.node} strokeWidth="2" />
         <circle cx="150" cy="90" r="26" stroke={ink.edgeActive} strokeWidth="1" strokeDasharray="3 4" opacity="0.7" />
         <circle cx="150" cy="90" r="8" fill={ink.node} />
@@ -53,6 +63,16 @@ export default function NodeCanvas({ theme = "paper", className = "" }: NodeCanv
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.45 }}
       >
+        <motion.circle
+          cx="430"
+          cy="110"
+          r="40"
+          fill="none"
+          stroke={ink.node}
+          strokeOpacity="0.4"
+          animate={{ r: [34, 48], opacity: [0.4, 0] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut", delay: 0.7 }}
+        />
         <circle cx="430" cy="110" r="34" fill={theme === "ink" ? "#13190F" : "#FFFFFF"} stroke={ink.node} strokeWidth="2" />
         <circle cx="430" cy="110" r="26" stroke={ink.edgeActive} strokeWidth="1" strokeDasharray="3 4" opacity="0.7" />
         <path d="M421 106 l6 6 l10 -12" stroke={ink.node} strokeWidth="2" fill="none" />
@@ -70,6 +90,16 @@ export default function NodeCanvas({ theme = "paper", className = "" }: NodeCanv
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.75 }}
       >
+        <motion.circle
+          cx="700"
+          cy="140"
+          r="40"
+          fill="none"
+          stroke={ink.edgeActive}
+          strokeOpacity="0.5"
+          animate={{ r: [34, 48], opacity: [0.5, 0] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut", delay: 1.4 }}
+        />
         <circle cx="700" cy="140" r="34" fill={ink.node} stroke={ink.node} strokeWidth="2" />
         <circle cx="700" cy="140" r="26" stroke="rgba(255,255,255,0.6)" strokeWidth="1" strokeDasharray="3 4" opacity="0.6" />
         <path d="M691 136 h18 M700 127 v18" stroke={theme === "ink" ? "#0C100A" : "#FFFFFF"} strokeWidth="3" strokeLinecap="round" />
@@ -87,6 +117,16 @@ export default function NodeCanvas({ theme = "paper", className = "" }: NodeCanv
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.6 }}
       >
+        <motion.circle
+          cx="120"
+          cy="330"
+          r="40"
+          fill="none"
+          stroke={ink.node}
+          strokeOpacity="0.4"
+          animate={{ r: [34, 48], opacity: [0.4, 0] }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: "easeOut", delay: 2.1 }}
+        />
         <circle cx="120" cy="330" r="34" fill={ink.node} stroke={ink.node} strokeWidth="2" />
         <circle cx="120" cy="330" r="8" fill={theme === "ink" ? "#0C100A" : "#FFFFFF"} />
         <text x="120" y="386" textAnchor="middle" fill={theme === "ink" ? "#FFFFFF" : "#0C100A"} fontSize="11" fontFamily="JetBrains Mono, monospace" fontWeight="600">
@@ -102,8 +142,23 @@ export default function NodeCanvas({ theme = "paper", className = "" }: NodeCanv
       >
         <circle cx="440" cy="320" r="12" fill={theme === "ink" ? "#13190F" : "#FFFFFF"} stroke={ink.node} strokeWidth="2" />
         <circle cx="700" cy="300" r="12" fill="#13190F" stroke={ink.edge} strokeWidth="1.5" />
-        <circle cx="460" cy="215" r="8" fill={ink.edgeActive} opacity="0.8" />
-        <circle cx="690" cy="220" r="6" fill={ink.edgeActive} opacity="0.6" />
+        <motion.circle
+          cx="460"
+          cy="215"
+          r="8"
+          fill={ink.edgeActive}
+          opacity="0.8"
+          animate={{ r: [6, 9, 6], opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+        />
+        <motion.circle
+          cx="690"
+          cy="220"
+          r="6"
+          fill={ink.edgeActive}
+          animate={{ r: [4, 7, 4], opacity: [0.4, 0.9, 0.4] }}
+          transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 1.1 }}
+        />
       </motion.g>
     </svg>
   )

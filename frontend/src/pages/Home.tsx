@@ -1,8 +1,11 @@
+import { Link } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Search, Terminal, Loader2, CheckCircle2, Server, Rocket, ArrowRight, Braces, Zap, Globe } from "lucide-react"
 import WorkflowCard from "../components/WorkflowCard"
 import NodeCanvas from "../components/NodeCanvas"
+import CountUp from "../components/CountUp"
+import Marquee from "../components/Marquee"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
 import api from "../lib/api"
@@ -25,6 +28,7 @@ export default function Home() {
   const [workflows, setWorkflows] = useState<any[]>([])
   const [showDeployModal, setShowDeployModal] = useState(false)
   const [deployStep, setDeployStep] = useState(0)
+  const [openFaq, setOpenFaq] = useState<number | null>(0)
 
   useEffect(() => {
     api.get("/workflows")
@@ -94,19 +98,40 @@ export default function Home() {
             </div>
 
             <h1 className="text-5xl md:text-6xl xl:text-7xl font-extrabold tracking-tight leading-[0.98] text-foreground mb-8">
-              The <span className="serif-accent">GitHub</span> for
-              <br />
-              <span className="relative inline-block">
+              <motion.span
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+                className="block"
+              >
+                The <span className="serif-accent">GitHub</span> for
+              </motion.span>
+              <motion.span
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                className="block relative inline-block"
+              >
                 <span className="serif-accent text-transparent bg-clip-text bg-gradient-to-r from-[hsl(79,70%,30%)] to-[hsl(90,60%,20%)]">Automations</span>
-                <span className="absolute -bottom-2 left-0 right-0 h-[6px] bg-[hsl(79,90%,50%)] -z-10 -rotate-1" />
-              </span>
+                <motion.span
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.6, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                  className="absolute -bottom-2 left-0 right-0 h-[6px] bg-[hsl(79,90%,50%)] origin-left -rotate-1"
+                />
+              </motion.span>
             </h1>
 
-            <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-xl font-medium leading-relaxed">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="text-lg md:text-xl text-muted-foreground mb-10 max-w-xl font-medium leading-relaxed"
+            >
               Discover, share, and collaborate on powerful n8n workflows.
               Stop reinventing the wheel — deploy production-ready automations
               in a single click.
-            </p>
+            </motion.p>
 
             <div className="relative group w-full max-w-lg mb-14">
               <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none">
@@ -125,14 +150,16 @@ export default function Home() {
             </div>
 
             <div className="flex flex-wrap items-center gap-8 md:gap-12 pt-8 border-t-2 border-dashed border-border w-full max-w-lg">
-              {[
-                { v: "10k+", l: "workflows" },
-                { v: "500+", l: "integrations" },
+              {([
+                { to: 10000, suffix: "+", l: "workflows" },
+                { to: 500, suffix: "+", l: "integrations" },
                 { v: "1-click", l: "deploy" }
-              ].map((s) => (
-                <div key={s.l}>
-                  <span className="block text-3xl font-extrabold tracking-tight text-foreground">{s.v}</span>
-                  <span className="block text-[11px] text-muted-foreground uppercase tracking-[0.2em] font-mono mt-0.5">{s.l}</span>
+              ] as { to?: number; suffix?: string; v?: string; l: string }[]).map((stat) => (
+                <div key={stat.l}>
+                  <span className="block text-3xl font-extrabold tracking-tight text-foreground">
+                    {stat.to !== undefined ? <CountUp to={stat.to!} suffix={stat.suffix} /> : stat.v}
+                  </span>
+                  <span className="block text-[11px] text-muted-foreground uppercase tracking-[0.2em] font-mono mt-0.5">{stat.l}</span>
                 </div>
               ))}
             </div>
@@ -145,7 +172,7 @@ export default function Home() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="relative z-10 hidden lg:block"
           >
-            <div className="relative">
+            <div className="relative animate-float">
               <div className="absolute inset-0 bg-[hsl(79,90%,50%)]/10 blur-[80px] rounded-full" />
 
               <div className="relative ink-section rounded-3xl p-8 border border-ink shadow-[8px_8px_0_0_var(--foreground)] overflow-hidden">
@@ -192,8 +219,13 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ================= INTEGRATION TICKER ================= */}
+      <section className="w-full border-y-2 border-border/70 bg-[hsl(46,22%,92%)] py-5 relative overflow-hidden">
+        <Marquee items={["slack", "stripe", "openai", "notion", "discord", "github", "gmail", "hubspot", "linear", "supabase", "n8n", "postgres"]} />
+      </section>
+
       {/* ================= STACK BUILDER ================= */}
-      <section className="w-full py-16 relative">
+      <section id="stack-builder" className="w-full py-16 relative">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-wrap items-end justify-between gap-6 mb-10">
             <div>
@@ -236,12 +268,17 @@ export default function Home() {
       </section>
 
       {/* ================= CLOUD DEPLOY ================= */}
-      <section className="w-full ink-section relative overflow-hidden">
+      <section id="cloud" className="w-full ink-section relative overflow-hidden">
         <div className="absolute inset-0 dot-grid-ink opacity-50 pointer-events-none" />
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[hsl(79,90%,55%)]/60 to-transparent" />
 
         <div className="max-w-7xl mx-auto px-4 py-24 grid lg:grid-cols-2 gap-16 items-center relative">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
             <p className="eyebrow text-[hsl(79,60%,45%)] mb-4">// 02 · flowhub cloud</p>
             <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-ink-fore leading-[1.05] mb-6">
               1-click deploy to{" "}
@@ -269,7 +306,7 @@ export default function Home() {
             <Button onClick={startDeployment} className="btn-volt px-8 py-5 text-base rounded-xl">
               <Rocket className="w-5 h-5" /> Deploy a Workflow
             </Button>
-          </div>
+          </motion.div>
 
           <div className="relative">
             <div className="absolute -inset-6 bg-[hsl(79,90%,50%)]/15 blur-[80px] rounded-full" />
@@ -301,7 +338,7 @@ export default function Home() {
       </section>
 
       {/* ================= DEV & BUSINESS ================= */}
-      <section className="w-full py-20 relative">
+      <section id="who" className="w-full py-20 relative">
         <div className="max-w-7xl mx-auto px-4">
           <p className="eyebrow text-muted-foreground mb-10 text-center">// 03 · who it's for</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -342,7 +379,7 @@ export default function Home() {
       </section>
 
       {/* ================= LATEST UPLOADS ================= */}
-      <section className="w-full ink-section relative overflow-hidden">
+      <section id="latest" className="w-full ink-section relative overflow-hidden">
         <div className="absolute inset-0 dot-grid-ink opacity-40 pointer-events-none" />
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[hsl(79,90%,55%)]/60 to-transparent" />
 
@@ -354,9 +391,12 @@ export default function Home() {
                 Latest <span className="serif-accent">uploads</span>
               </h2>
             </div>
-            <button className="inline-flex items-center gap-2 font-mono text-sm font-semibold text-ink-fore border-2 border-ink-fore/40 rounded-lg px-4 py-2 hover:border-[hsl(79,90%,55%)] hover:text-[hsl(79,90%,55%)] transition-colors">
+            <Link
+              to="/explore"
+              className="inline-flex items-center gap-2 font-mono text-sm font-semibold text-ink-fore border-2 border-ink-fore/40 rounded-lg px-4 py-2 hover:border-[hsl(79,90%,55%)] hover:text-[hsl(79,90%,55%)] transition-colors"
+            >
               View all workflows <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -380,29 +420,51 @@ export default function Home() {
       </section>
 
       {/* ================= FAQ ================= */}
-      <section className="w-full py-20">
+      <section id="faq" className="w-full py-20">
         <div className="max-w-3xl mx-auto px-4">
           <p className="eyebrow text-muted-foreground mb-4 text-center">// 05 · faq</p>
           <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-center mb-12">
             Frequently asked <span className="serif-accent">questions</span>
           </h2>
-          <div className="space-y-4">
-            {FAQS.map((faq, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.08 }}
-                className="paper-card p-6 group"
-              >
-                <h4 className="text-lg font-bold tracking-tight mb-2 flex items-start gap-3">
-                  <span className="font-mono text-xs text-muted-foreground mt-1.5">0{i + 1}</span>
-                  {faq.q}
-                </h4>
-                <p className="text-muted-foreground pl-8 leading-relaxed text-[15px]">{faq.a}</p>
-              </motion.div>
-            ))}
+          <div className="space-y-3">
+            {FAQS.map((faq, i) => {
+              const open = openFaq === i
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  className={`paper-card group overflow-hidden cursor-pointer transition-colors ${open ? "border-[hsl(79,60%,45%)]" : ""}`}
+                  onClick={() => setOpenFaq(open ? null : i)}
+                >
+                  <h4 className="text-lg font-bold tracking-tight flex items-center gap-4 px-6 py-5 select-none">
+                    <span className="font-mono text-xs text-muted-foreground mt-0.5">0{i + 1}</span>
+                    <span className="flex-1">{faq.q}</span>
+                    <motion.span
+                      animate={{ rotate: open ? 45 : 0 }}
+                      transition={{ duration: 0.25 }}
+                      className="text-2xl font-light text-[hsl(79,60%,40%)] leading-none"
+                    >
+                      +
+                    </motion.span>
+                  </h4>
+                  <AnimatePresence initial={false}>
+                    {open && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      >
+                        <p className="text-muted-foreground leading-relaxed text-[15px] px-6 pb-5 pl-[52px]">{faq.a}</p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              )
+            })}
           </div>
         </div>
       </section>

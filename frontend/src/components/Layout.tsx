@@ -1,5 +1,7 @@
 import { Outlet } from "react-router-dom"
+import { motion, useScroll, useSpring } from "framer-motion"
 import Navbar from "./Navbar"
+import CursorGlow from "./CursorGlow"
 import { Heart, Star, Mail, Braces, ArrowUpRight } from "lucide-react"
 
 const GitHubIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
@@ -11,8 +13,17 @@ const GitHubIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
 const GITHUB_URL = "https://github.com/BaarhaviGit/FlowHub"
 
 export default function Layout() {
+  const { scrollYProgress } = useScroll()
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 })
+
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col font-sans selection:bg-[hsl(79,90%,55%)] selection:text-[#0C100A] relative">
+      {/* Scroll progress bar */}
+      <motion.div
+        style={{ scaleX: progress }}
+        className="fixed top-0 inset-x-0 h-[3px] origin-left z-[60] bg-[hsl(79,90%,50%)]"
+      />
+      <CursorGlow />
       <Navbar />
       <main className="flex-1 relative z-10">
         <Outlet />
@@ -105,19 +116,19 @@ export default function Layout() {
                 links: [
                   { label: "explore marketplace", href: "/explore" },
                   { label: "upload workflow", href: "/upload" },
-                  { label: "flowhub cloud", href: "#" },
-                  { label: "pricing", href: "#" },
-                  { label: "changelog", href: "#" }
+                  { label: "flowhub cloud", href: "/#cloud" },
+                  { label: "dev & business", href: "/#who" },
+                  { label: "changelog", href: `${GITHUB_URL}/releases` }
                 ]
               },
               {
                 title: "resources",
                 links: [
-                  { label: "documentation", href: "#" },
-                  { label: "n8n tutorials", href: "#" },
-                  { label: "api reference", href: "#" },
-                  { label: "community forum", href: "#" },
-                  { label: "contribute on github", href: GITHUB_URL }
+                  { label: "documentation", href: `${GITHUB_URL}#readme` },
+                  { label: "api reference", href: `${GITHUB_URL}/tree/main/backend` },
+                  { label: "report an issue", href: `${GITHUB_URL}/issues` },
+                  { label: "open a PR", href: `${GITHUB_URL}/pulls` },
+                  { label: "contribute", href: GITHUB_URL }
                 ]
               }
             ].map(col => (
@@ -130,7 +141,7 @@ export default function Layout() {
                     <li key={link.label}>
                       <a
                         href={link.href}
-                        {...(link.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                        {...(link.href.startsWith("http") && !link.href.startsWith("/") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                         className="hover:text-ink-fore transition-colors font-medium"
                       >
                         {link.label}
@@ -181,8 +192,12 @@ export default function Layout() {
               </span>
             </div>
             <div className="flex gap-6 font-mono text-xs text-ink-muted">
-              <a href="#" className="hover:text-[hsl(79,90%,55%)] transition-colors">privacy policy</a>
-              <a href="#" className="hover:text-[hsl(79,90%,55%)] transition-colors">terms of service</a>
+              <a href={`${GITHUB_URL}#readme`} target="_blank" rel="noopener noreferrer" className="hover:text-[hsl(79,90%,55%)] transition-colors">
+                documentation
+              </a>
+              <a href={`${GITHUB_URL}/issues`} target="_blank" rel="noopener noreferrer" className="hover:text-[hsl(79,90%,55%)] transition-colors">
+                report an issue
+              </a>
               <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="hover:text-[hsl(79,90%,55%)] transition-colors flex items-center gap-1">
                 github <ArrowUpRight className="w-3 h-3" />
               </a>

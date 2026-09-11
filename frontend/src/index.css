@@ -180,4 +180,19 @@
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
+  .animate-marquee {
+    animation: marquee 28s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .animate-blob {
+    animation: blob 9s ease-in-out infinite alternate;
+  }
+  @keyframes blob {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(24px, -32px) scale(1.12); }
+    100% { transform: translate(-20px, 20px) scale(0.94); }
+  }
 }
