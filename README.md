@@ -15,7 +15,7 @@ n8n is the most flexible automation engine out there, but great workflows stay b
 -  **Fork & remix** — take a workflow, adapt it, and share your version back
 -  **Integration-native** — built for the n8n ecosystem (200+ integrations and counting)
 -  **Zero DevOps** — no VPS instances, no reverse proxies, no Docker drilling
--  **100% open source** — MIT-licensed, self-hostable stack
+-  **100% open source** — Self-hostable stack
 
 ## Tech Stack
 
