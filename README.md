@@ -2,18 +2,20 @@
 
 Discover, share, and 1-click deploy production-ready **n8n workflows**. Stop reinventing the wheel — FlowHub is the open-source marketplace where builders publish automation workflows, fork others, and push them to the cloud in a single click.
 
-![FlowHub](frontend/public/favicon.svg)
+<p align="center">
+  <img src="frontend/public/favicon.svg" alt="FlowHub" width="50">
+</p>
 
 ## Why FlowHub?
 
 n8n is the most flexible automation engine out there, but great workflows stay buried in private instances and unsearchable blog exports. FlowHub treats workflows the way GitHub treats code:
 
-- 🚀 **1-click deploy** — push any workflow to autoscaling infrastructure, webhook live in under a minute
-- 🔍 **Searchable marketplace** — browse by category and tags, find exactly the automation you need
-- 🔄 **Fork & remix** — take a workflow, adapt it, and share your version back
-- 🧩 **Integration-native** — built for the n8n ecosystem (200+ integrations and counting)
-- ☁️ **Zero DevOps** — no VPS instances, no reverse proxies, no Docker drilling
-- 🆓 **100% open source** — MIT-licensed, self-hostable stack
+-  **1-click deploy** — push any workflow to autoscaling infrastructure, webhook live in under a minute
+-  **Searchable marketplace** — browse by category and tags, find exactly the automation you need
+-  **Fork & remix** — take a workflow, adapt it, and share your version back
+-  **Integration-native** — built for the n8n ecosystem (200+ integrations and counting)
+-  **Zero DevOps** — no VPS instances, no reverse proxies, no Docker drilling
+-  **100% open source** — MIT-licensed, self-hostable stack
 
 ## Tech Stack
 
@@ -98,9 +100,9 @@ Boots **PostgreSQL 15** (`flowhub-db`, port 5432) and **n8n** (`flowhub-n8n`, po
 | `GET` | `/api/workflows` | — | List all workflows |
 | `GET` | `/api/workflows/{id}` | — | Get workflow by ID |
 | `GET` | `/api/workflows/search?q=` | — | Search workflows by title/description/tags |
-| `POST` | `/api/workflows` | ✅ JWT | Upload a workflow (multipart: title, description, category, tags, file) |
+| `POST` | `/api/workflows` |  JWT | Upload a workflow (multipart: title, description, category, tags, file) |
 | `GET` | `/api/workflows/download/{id}` | — | Download a workflow's JSON file |
-| `POST` | `/api/workflows/{id}/deploy` | ✅ JWT | Deploy a workflow (currently mocked) |
+| `POST` | `/api/workflows/{id}/deploy` |  JWT | Deploy a workflow (currently mocked) |
 | `GET` | `/api/workflows/{id}/status` | — | Get workflow deployment status |
 
 All protected endpoints expect `Authorization: Bearer <jwt>`.
