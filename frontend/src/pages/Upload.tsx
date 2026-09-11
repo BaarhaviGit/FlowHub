@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Upload as UploadIcon, FileJson, X, Loader2 } from "lucide-react"
+import { Upload as UploadIcon, FileJson, X, Loader2, Braces } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
@@ -15,10 +15,10 @@ export default function Upload() {
   const [description, setDescription] = useState("")
   const [category, setCategory] = useState("")
   const [tags, setTags] = useState("")
-  
+
   const [isDragging, setIsDragging] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  
+
   const navigate = useNavigate()
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -57,7 +57,6 @@ export default function Upload() {
       formData.append("tags", tags)
       formData.append("file", file)
 
-      // Use the api interceptor to automatically pass the JWT token
       await api.post("/workflows", formData, {
         headers: {
           "Content-Type": "multipart/form-data"
@@ -77,23 +76,31 @@ export default function Upload() {
   return (
     <div className="container mx-auto px-4 py-12 max-w-3xl min-h-[calc(100vh-80px)]">
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
+        initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.4 }}
+        className="relative"
       >
-        <Card className="bg-secondary border-white/20 backdrop-blur-xl shadow-xl">
-          <CardHeader>
-            <CardTitle className="text-3xl font-bold text-center">Upload Workflow</CardTitle>
-            <CardDescription className="text-center text-lg mt-2">
-              Share your n8n automation with the FlowHub community.
+        <div className="absolute inset-0 -z-10 dot-grid opacity-40 pointer-events-none rounded-3xl" />
+
+        <Card className="bg-card border-2 border-foreground shadow-[6px_6px_0_0_var(--foreground)] rounded-2xl backdrop-blur-xl">
+          <CardHeader className="items-center text-center space-y-2">
+            <span className="w-12 h-12 rounded-xl bg-ink border-2 border-foreground flex items-center justify-center shadow-[3px_3px_0_0_var(--foreground)] mb-2">
+              <Braces className="w-6 h-6 text-[hsl(79,90%,55%)]" />
+            </span>
+            <CardTitle className="text-3xl font-extrabold tracking-tight">Upload workflow</CardTitle>
+            <CardDescription className="font-mono text-[11px] uppercase tracking-[0.2em]">
+              // publish an n8n automation to the marketplace
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            
+
             {/* File Upload Area */}
-            <div 
-              className={`border-2 border-dashed rounded-xl p-10 flex flex-col items-center justify-center transition-colors ${
-                isDragging ? "border-primary bg-primary/10" : "border-white/20 hover:border-white/40 bg-black/20"
+            <div
+              className={`border-2 border-dashed rounded-2xl p-10 flex flex-col items-center justify-center transition-colors ${
+                isDragging
+                  ? "border-foreground bg-[hsl(79,80%,50%)]/15 shadow-[inset_0_0_0_2px_hsl(79,90%,50%_/_30%)]"
+                  : "border-border hover:border-foreground bg-ink/5"
               }`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
@@ -101,96 +108,99 @@ export default function Upload() {
             >
               {!file ? (
                 <>
-                  <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center mb-4 text-primary">
-                    <UploadIcon className="w-8 h-8" />
+                  <div className="w-16 h-16 rounded-2xl bg-ink flex items-center justify-center mb-5 shadow-[4px_4px_0_0_var(--secondary-foreground)]">
+                    <UploadIcon className="w-8 h-8 text-[hsl(79,90%,55%)]" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">Drag & drop your JSON file here</h3>
-                  <p className="text-sm text-muted-foreground mb-4">or click to browse from your computer</p>
-                  <Input 
-                    type="file" 
-                    accept=".json" 
-                    className="hidden" 
-                    id="file-upload" 
+                  <h3 className="text-lg font-extrabold tracking-tight mb-2">Drag & drop your JSON here</h3>
+                  <p className="text-sm text-muted-foreground font-medium mb-5">or click to browse from your computer</p>
+                  <Input
+                    type="file"
+                    accept=".json"
+                    className="hidden"
+                    id="file-upload"
                     onChange={(e: any) => {
                       if (e.target.files) setFile(e.target.files[0])
-                    }} 
+                    }}
                   />
                   <Label htmlFor="file-upload">
-                    <span className="cursor-pointer bg-secondary hover:bg-secondary/80 text-foreground px-4 py-2 rounded-md font-medium transition-colors">
-                      Browse Files
+                    <span className="inline-flex items-center cursor-pointer bg-ink hover:bg-ink/90 text-ink-fore px-5 py-2.5 rounded-lg font-mono text-sm font-semibold border-2 border-foreground shadow-[3px_3px_0_0_var(--foreground)] transition-all hover:-translate-y-0.5">
+                      $ browse files
                     </span>
                   </Label>
                 </>
               ) : (
                 <div className="flex flex-col items-center w-full">
-                  <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mb-4 text-emerald-400">
-                    <FileJson className="w-8 h-8" />
+                  <div className="w-16 h-16 rounded-2xl bg-[hsl(96,45%,30%)]/15 flex items-center justify-center mb-5 shadow-[4px_4px_0_0_hsl(96,45%,30%)]">
+                    <FileJson className="w-8 h-8 text-[hsl(96,60%,35%)]" />
                   </div>
-                  <h3 className="text-lg font-semibold text-emerald-400 mb-1">{file.name}</h3>
-                  <p className="text-sm text-muted-foreground mb-4">{(file.size / 1024).toFixed(2)} KB</p>
-                  <Button variant="outline" size="sm" onClick={() => setFile(null)} className="text-destructive hover:text-destructive hover:bg-destructive/10">
-                    <X className="w-4 h-4 mr-2" /> Remove File
+                  <h3 className="text-lg font-extrabold tracking-tight text-foreground mb-1 font-mono">{file.name}</h3>
+                  <p className="text-sm text-muted-foreground font-mono mb-5">{(file.size / 1024).toFixed(2)} KB</p>
+                  <Button variant="outline" size="sm" onClick={() => setFile(null)} className="border-2 border-destructive text-destructive hover:bg-destructive/10 font-mono">
+                    <X className="w-4 h-4 mr-2" /> remove file
                   </Button>
                 </div>
               )}
             </div>
 
             {/* Metadata Fields */}
-            <div className="space-y-4 pt-4 border-t border-white/10">
+            <div className="space-y-4 pt-4 border-t-2 border-dashed border-border">
               <div className="space-y-2">
-                <Label htmlFor="title">Title</Label>
-                <Input 
-                  id="title" 
+                <Label htmlFor="title" className="font-mono text-xs uppercase tracking-wider text-muted-foreground">title</Label>
+                <Input
+                  id="title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="e.g., Slack to Notion Sync" 
-                  className="bg-background border-white/20 shadow-inner" 
+                  placeholder="e.g., Slack to Notion Sync"
+                  className="border-2 border-border bg-card focus:ring-0"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
-                <textarea 
-                  id="description" 
+                <Label htmlFor="description" className="font-mono text-xs uppercase tracking-wider text-muted-foreground">description</Label>
+                <textarea
+                  id="description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  rows={3} 
-                  className="flex min-h-[80px] w-full rounded-md border border-white/20 bg-background px-3 py-2 text-sm shadow-inner placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50" 
+                  rows={3}
+                  className="flex min-h-[80px] w-full rounded-lg border-2 border-border bg-card px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[hsl(79,80%,50%)] placeholder:text-muted-foreground"
                   placeholder="Describe what this workflow does..."
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="category">Category</Label>
-                  <Input 
-                    id="category" 
+                  <Label htmlFor="category" className="font-mono text-xs uppercase tracking-wider text-muted-foreground">category</Label>
+                  <Input
+                    id="category"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    placeholder="e.g., Productivity" 
-                    className="bg-background border-white/20 shadow-inner" 
+                    placeholder="e.g., Productivity"
+                    className="border-2 border-border bg-card focus:ring-0"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="tags">Tags (comma separated)</Label>
-                  <Input 
-                    id="tags" 
+                  <Label htmlFor="tags" className="font-mono text-xs uppercase tracking-wider text-muted-foreground">tags (csv)</Label>
+                  <Input
+                    id="tags"
                     value={tags}
                     onChange={(e) => setTags(e.target.value)}
-                    placeholder="e.g., slack, notion" 
-                    className="bg-background border-white/20 shadow-inner" 
+                    placeholder="e.g., slack, notion"
+                    className="border-2 border-border bg-card focus:ring-0"
                   />
                 </div>
               </div>
             </div>
 
           </CardContent>
-          <CardFooter className="flex justify-end pt-6 border-t border-white/10 bg-black/10 rounded-b-xl">
-            <Button variant="ghost" className="mr-2" onClick={() => navigate(-1)}>Cancel</Button>
-            <Button 
-              onClick={handleUpload} 
+          <CardFooter className="flex justify-end pt-6 gap-3 border-t-2 border-dashed border-border bg-ink/5 rounded-b-2xl">
+            <Button variant="ghost" className="font-mono text-muted-foreground hover:text-foreground" onClick={() => navigate(-1)}>
+              cancel
+            </Button>
+            <Button
+              onClick={handleUpload}
               disabled={!file || !title || !description || !category || !tags || isLoading}
+              className="btn-volt px-8 py-3"
             >
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Publish Workflow
+              {isLoading ? "publishing…" : "$ publish"}
             </Button>
           </CardFooter>
         </Card>

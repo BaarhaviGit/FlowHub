@@ -4,6 +4,11 @@ export default {
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
   	extend: {
+  		fontFamily: {
+  			sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+  			serif: ['var(--font-serif)', 'ui-serif', 'Georgia', 'serif'],
+  			mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+  		},
   		colors: {
   			background: 'var(--background)',
   			foreground: 'var(--foreground)',
@@ -35,9 +40,14 @@ export default {
   				DEFAULT: 'var(--destructive)',
   				foreground: 'var(--destructive-foreground)'
   			},
-  			border: 'var(--border)',
-  			input: 'var(--input)',
-  			ring: 'var(--ring)'
+border: 'var(--border)',
+			input: 'var(--input)',
+			ring: 'var(--ring)',
+			ink: {
+				DEFAULT: 'var(--ink)',
+				fore: 'var(--ink-fore)',
+				muted: 'var(--ink-muted)'
+			},
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

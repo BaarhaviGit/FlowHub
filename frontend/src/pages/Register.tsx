@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Braces } from "lucide-react"
 import { toast } from "sonner"
 import api from "../lib/api"
 
@@ -23,12 +24,8 @@ export default function Register() {
 
     try {
       const response = await api.post("/auth/register", { username, email, password })
-      
-      // Console log the created user details as requested!
       console.log("Account created successfully. Details:", response.data)
       toast.success("Account created successfully!")
-      
-      // Redirect to login after successful registration
       navigate("/login")
     } catch (err: any) {
       let errorMessage = "Registration failed. Please try again.";
@@ -46,71 +43,73 @@ export default function Register() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-20 flex justify-center items-center min-h-[calc(100vh-80px)]">
+    <div className="container mx-auto px-4 py-16 flex justify-center items-center min-h-[calc(100vh-80px)]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="w-full max-w-md relative"
       >
-        <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/30 rounded-full mix-blend-screen filter blur-3xl opacity-70 animate-pulse"></div>
-        <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-500/20 rounded-full mix-blend-screen filter blur-3xl opacity-70 animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute inset-0 -z-10 dot-grid opacity-40 pointer-events-none" />
 
-        <Card className="bg-secondary border-white/20 backdrop-blur-xl shadow-2xl relative z-10">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-3xl font-bold text-center">Create an account</CardTitle>
-            <CardDescription className="text-center">
-              Join FlowHub to share and discover workflows
+        <Card className="bg-card border-2 border-foreground shadow-[6px_6px_0_0_var(--foreground)] rounded-2xl backdrop-blur-xl relative z-10">
+          <CardHeader className="space-y-2 items-center text-center">
+            <span className="w-12 h-12 rounded-xl bg-ink border-2 border-foreground flex items-center justify-center shadow-[3px_3px_0_0_var(--foreground)] mb-2">
+              <Braces className="w-6 h-6 text-[hsl(79,90%,55%)]" />
+            </span>
+            <CardTitle className="text-3xl font-extrabold tracking-tight">Create an account</CardTitle>
+            <CardDescription className="font-mono text-[11px] uppercase tracking-[0.2em]">
+              // join the automation community
             </CardDescription>
           </CardHeader>
           <form onSubmit={handleRegister}>
             <CardContent className="space-y-4">
-              {error && <div className="p-3 text-sm text-red-500 bg-red-500/10 border border-red-500/20 rounded-md">{error}</div>}
+              {error && <div className="p-3 text-sm font-medium text-destructive bg-destructive/10 border border-destructive/30 rounded-lg">{error}</div>}
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
-                <Input 
-                  id="username" 
-                  type="text" 
-                  placeholder="johndoe" 
+                <Label htmlFor="username" className="font-mono text-xs uppercase tracking-wider text-muted-foreground">username</Label>
+                <Input
+                  id="username"
+                  type="text"
+                  placeholder="johndoe"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="bg-background border-white/20 shadow-inner" 
+                  className="border-2 border-border bg-card focus:ring-0"
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input 
-                  id="email" 
-                  type="email" 
-                  placeholder="john@example.com" 
+                <Label htmlFor="email" className="font-mono text-xs uppercase tracking-wider text-muted-foreground">email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="john@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-background border-white/20 shadow-inner" 
+                  className="border-2 border-border bg-card focus:ring-0"
                   required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input 
-                  id="password" 
-                  type="password" 
+                <Label htmlFor="password" className="font-mono text-xs uppercase tracking-wider text-muted-foreground">password</Label>
+                <Input
+                  id="password"
+                  type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="bg-background border-white/20 shadow-inner" 
+                  className="border-2 border-border bg-card focus:ring-0"
                   required
                 />
               </div>
-              <Button type="submit" className="w-full mt-4" disabled={isLoading}>
-                {isLoading ? "Creating Account..." : "Create Account"}
+              <Button type="submit" className="btn-volt w-full py-3 mt-4 text-base" disabled={isLoading}>
+                {isLoading ? "creating account…" : "$ create account"}
               </Button>
             </CardContent>
           </form>
           <CardFooter className="flex flex-col">
-            <div className="mt-2 text-center text-sm text-muted-foreground">
+            <div className="mt-2 text-center text-sm font-medium text-muted-foreground">
               Already have an account?{" "}
-              <Link to="/login" className="text-primary font-medium hover:underline">
-                Sign in
+              <Link to="/login" className="text-[hsl(79,60%,35%)] font-semibold hover:underline">
+                sign in
               </Link>
             </div>
           </CardFooter>
